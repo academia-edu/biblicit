@@ -6,10 +6,10 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 Gem::Specification.new do |gem|
   gem.name          = "biblicit"
   gem.version       = "1.0"
-  gem.authors       = ["David Judd", "CiteSeerX"]
+  gem.authors       = ["David Judd"]
   gem.email         = ["david@academia.edu"]
-  gem.description   = %q{Wrapper around the core perl ingestion code from CiteSeerX}
-  gem.summary       = %q{Wrapper around the core perl ingestion code from CiteSeerX}
+  gem.description   = %q{Extract citations from PDFs.}
+  gem.summary       = %q{Extract citations from PDFs.}
   gem.homepage      = "http://github.com/academia-edu/biblicit"
 
   gem.files         = `git ls-files`.split($\)

@@ -97,3 +97,9 @@ Note: On OS X you'll need to use greadlink instead of readlink if you have coreu
 ##### On Debian/Ubuntu
 
     sudo apt-get install libicu-dev
+
+## Copying
+
+Copyright Academia.edu or the original author(s).
+
+Apache licensed (see LICENSE.TXT).
