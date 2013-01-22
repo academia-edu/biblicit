@@ -4,9 +4,6 @@ require 'tempfile'
 
 module Cb2Bib
 
-  CB2BIB_CONFIG_PATH = "#{File.dirname(__FILE__)}/../../resources/cb2Bib.conf"
-  CB2BIB_CONFIG = IO.read(CB2BIB_CONFIG_PATH)
-
   def self.extract(file, opts)
     ParseOperation.new(file, opts)
   end
@@ -24,11 +21,11 @@ module Cb2Bib
   private
 
     def extract_from_file(pdf, remote=false, sloppy=true)
-      bib = Tempfile.new('bib')
-      conf = Tempfile.new('conf') # we'll put our custom configuration here, and then cb2bib will fill in the rest with its defaults
+      bib = Tempfile.new(['out','.bib'])
+      conf = Tempfile.new(['cb2bib','.conf']) # we'll put our custom configuration here, and then cb2bib will fill in the rest with its defaults
 
       begin
-        conf.write(CB2BIB_CONFIG)
+        conf.write(cb2bib_config(remote))
         conf.open # not clear why we have to do this, but otherwise cb2bib doesn't read it
         `cb2bib #{sloppy ? '--sloppy' : ''} --doc2bib #{pdf.shellescape} #{bib.path} --conf #{conf.path}`
         bibtext = bib.read
@@ -50,6 +47,10 @@ module Cb2Bib
       end
 
       @result[:valid] = !@result[:title].blank?
+    end
+
+    def cb2bib_config(remote)
+      "[cb2Bib]\nAutomaticQuery=#{!!remote}"
     end
 
     def cleaned_field(field)

@@ -9,7 +9,7 @@ module Biblicit
 
   def self.extract(opts)
     if (content = opts.delete(:content))
-      Tempfile.open('pdf') do |pdf|
+      Tempfile.open(['in','.pdf']) do |pdf|
         pdf.write(content)
         extract_from_file pdf.path, opts
       end
