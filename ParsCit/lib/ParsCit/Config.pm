@@ -27,9 +27,9 @@ $URI = 'http://citeseerx.org/algorithms/parscit/wsdl';
 
 $tmpDir = "tmp";
 $dictFile = "resources/parsCitDict.txt";
-$crf_test = "crfpp/crf_test";
 $modelFile = "resources/parsCit.model";
 
+$crf_test = "crf_test"; # assumes crfpp is installed in the system path
 
 ## Citation Context
 

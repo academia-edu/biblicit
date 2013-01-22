@@ -15,7 +15,9 @@ use ParsCit::Controller;
 use HeaderParse::API::Parser;
 use HeaderParse::Config::API_Config;
 
-my $importDir = "/home/djudd/imports";
+my $importDir = "$FindBin::Bin/imports";
+
+my $logDir = "$FindBin::Bin/log";
 
 my $xmlHeader = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
 
@@ -23,17 +25,17 @@ my $bOnlyPS = 0;
 
 my $counter = 0;
 
+system("mkdir","-p","$importDir");
+system("mkdir","-p","$logDir");
 
-open (LOG, ">>prep.log");
-open (ERR, ">>prep.err");
+open (LOG, ">>$logDir/prep.log");
+open (ERR, ">>$logDir/prep.err");
 
-#my $filePath = "/home/djudd/CMS-Bobby12-galley.pdf";
-my $filePath = "Aristotle.pdf";
-print "$filePath\n";
+my $filePath = $ARGV[0];
+#print "$filePath\n";
 
 import($filePath, $counter);
 
-close FILES;
 close LOG;
 close ERR;
 
@@ -55,7 +57,7 @@ sub import {
 sub prep {
     my ($filePath, $id) = @_;
 
-    my $metPath = $filePath.".met";
+#    my $metPath = $filePath.".met";
 
 #    $filePath =~ m/^.*\/(.*)$/;
 #    my $fn = $1;

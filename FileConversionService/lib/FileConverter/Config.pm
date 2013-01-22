@@ -27,8 +27,7 @@ $TETPath = "$FindBin::Bin/../converters/TET-2.2-Linux/bin/tet";
 $TETLicensePath =
     "$FindBin::Bin/../converters/TET-2.2-Linux/licensekeys.txt";
 
-#$PDFBoxLocation = "$FindBin::Bin/../converters/PDFBox/PDFBox-0.7.3.jar";
-$PDFBoxLocation = "/home/djudd/pdfbox-app-1.7.1.jar";
+$PDFBoxLocation = "$FindBin::Bin/FileConversionService/converters/PDFBox/pdfbox-app-1.7.1.jar";
 
 $JODConverterPath = 
     "$FindBin::Bin/../converters/jodconverter-2.2.0/jodconverter-cli-2.2.0.jar";

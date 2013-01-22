@@ -23,10 +23,9 @@ my $dictFile = $ParsCit::Config::dictFile;
 $dictFile = "$FindBin::Bin/ParsCit/$dictFile";
 
 my $crf_test = $ParsCit::Config::crf_test;
-$crf_test = "$FindBin::Bin/ParsCit/crfpp/$crf_test";
 
 my $modelFile = $ParsCit::Config::modelFile;
-$modelFile = "$FindBin::Bin/ParsCit/resource/$modelFile";
+$modelFile = "$FindBin::Bin/ParsCit/$modelFile";
 
 ### END user customizable section
 

@@ -26,7 +26,15 @@ use vars qw($VERSION @ISA @EXPORT @EXPORT_OK %EXPORT_TAGS);
 
 $HeaderParseHome = "$FindBin::Bin/HeaderParseService";
 
-$SVM_Dir = "$HeaderParseHome/svm-light/";
+if ("$^0" == 'darwin') {
+  $SVM_Dir = "$HeaderParseHome/svm-light-osx/";
+}
+else {
+  $SVM_Dir = "$HeaderParseHome/svm-light-linux/";
+}
+
+system("chmod","u+x","$SVM_Dir/svm_classify","$SVM_Dir/svm_learn");
+
 $Database_Dir = "$HeaderParseHome/resources/database/";
 $Data_Dir = "$HeaderParseHome/resources/data/";
 $offlineD = "$HeaderParseHome/resources/models/";
