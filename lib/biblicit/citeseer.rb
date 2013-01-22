@@ -45,6 +45,7 @@ module CiteSeer
 
     def get_citations
       # TODO
+      []
     end
 
   end
