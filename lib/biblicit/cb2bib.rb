@@ -1,4 +1,4 @@
-# encoding UTF-8
+# encoding: UTF-8
 
 require 'tempfile'
 
@@ -7,25 +7,32 @@ module Cb2Bib
   CB2BIB_CONFIG_PATH = "#{File.dirname(__FILE__)}/../../resources/cb2Bib.conf"
   CB2BIB_CONFIG = IO.read(CB2BIB_CONFIG_PATH)
 
-  def self.extract(content, sloppy=true)
-    ParseOperation.new(content, sloppy)
+  def self.extract(file, opts)
+    ParseOperation.new(file, opts)
   end
 
   class ParseOperation
 
-    def initialize(content, sloppy=true)
-      pdf = Tempfile.new('pdf')
+    def initialize(file, opts)
+      extract_from_file(file, opts[:remote] || false, opts[:sloppy] || true)
+    end
+
+    def header
+      @result
+    end
+
+  private
+
+    def extract_from_file(pdf, remote=false, sloppy=true)
       bib = Tempfile.new('bib')
       conf = Tempfile.new('conf') # we'll put our custom configuration here, and then cb2bib will fill in the rest with its defaults
 
       begin
-        pdf.write(content)
         conf.write(CB2BIB_CONFIG)
         conf.open # not clear why we have to do this, but otherwise cb2bib doesn't read it
-        `cb2bib #{sloppy ? '--sloppy' : ''} --doc2bib #{pdf.path} #{bib.path} --conf #{conf.path}`
+        `cb2bib #{sloppy ? '--sloppy' : ''} --doc2bib #{pdf.shellescape} #{bib.path} --conf #{conf.path}`
         bibtext = bib.read
       ensure
-        pdf.close!
         conf.close!
         bib.close!
       end
@@ -41,13 +48,9 @@ module Cb2Bib
           end
         end
       end
-    end
 
-    def header
-      @result
+      @result[:valid] = !@result[:title].blank?
     end
-
-  private
 
     def cleaned_field(field)
       cleaned = field.to_sym

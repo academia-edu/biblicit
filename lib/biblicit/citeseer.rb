@@ -8,7 +8,7 @@ module CiteSeer
 
   PERL_DIR = "#{File.dirname(__FILE__)}/../../perl"
 
-  def self.extract(in_file)
+  def self.extract(in_file, opts)
     ParseOperation.new(in_file)
   end
 
