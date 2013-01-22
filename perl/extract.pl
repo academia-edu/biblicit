@@ -31,8 +31,6 @@ if ($argc != 2) {
   exit 1;
 }
 
-print "$argc\n";
-
 my $inputPath = $ARGV[0];
 my $outputPath = $ARGV[1];
 

@@ -1,3 +1,2 @@
-imports/*
-log/*
-HeaderParseService/tmp/*
+perl/log/*
+perl/HeaderParseService/tmp/*
