@@ -12,7 +12,7 @@ Gem::Specification.new do |gem|
   gem.summary       = %q{Extract citations from PDFs.}
   gem.homepage      = "http://github.com/academia-edu/biblicit"
 
-  gem.files         = `git ls-files`.split($\)
+  gem.files         = `git ls-files`.split("\n")
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
   gem.test_files    = gem.files.grep(%r{^spec/})
   gem.require_paths = ["lib"]
