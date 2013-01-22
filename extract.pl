@@ -15,26 +15,28 @@ use ParsCit::Controller;
 use HeaderParse::API::Parser;
 use HeaderParse::Config::API_Config;
 
-my $importDir = "$FindBin::Bin/imports";
-
 my $logDir = "$FindBin::Bin/log";
 
 my $xmlHeader = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
 
-my $bOnlyPS = 0;
-
-my $counter = 0;
-
-system("mkdir","-p","$importDir");
 system("mkdir","-p","$logDir");
 
 open (LOG, ">>$logDir/prep.log");
 open (ERR, ">>$logDir/prep.err");
 
-my $filePath = $ARGV[0];
-#print "$filePath\n";
+my $argc = scalar(@ARGV);
 
-import($filePath, $counter);
+if ($argc != 2) {
+  print "Usage: ./extract.pl path_to_input path_to_output\n";
+  exit 1;
+}
+
+print "$argc\n";
+
+my $inputPath = $ARGV[0];
+my $outputPath = $ARGV[1];
+
+import($inputPath, $outputPath);
 
 close LOG;
 close ERR;
@@ -44,6 +46,8 @@ exit;
 sub import {
     my ($filePath, $id) = @_;
 
+    system("mkdir","-p","$id");
+    
     my ($status, $msg) = prep($filePath, $id);
     if ($status == 0) {
 	print ERR "$id: $msg\n";
@@ -57,23 +61,14 @@ sub import {
 sub prep {
     my ($filePath, $id) = @_;
 
-#    my $metPath = $filePath.".met";
-
-#    $filePath =~ m/^.*\/(.*)$/;
-#    my $fn = $1;
     $filePath =~ m/^.*(\.(ps|pdf)(\.g?z)?)$/i;
     my $ext = $1;
 
-    my $targetPath = "$importDir/$id$ext";
-    #my $targetMET = "$importDir/$id.met";
+    my $targetPath = "$outputPath/out$ext";
 
     unless(copy($filePath, $targetPath)) {
-	return (0, "unable to copy $filePath to $targetPath: $!");
+	    return (0, "unable to copy $filePath to $targetPath: $!");
     }
-
-#    unless(copy($metPath, $targetMET)) {
-#	return (0, "unable to copy met file: $!");
-#    }
 
     my $textFile;
     my $conversionSuccess = 0;
@@ -126,7 +121,7 @@ sub extractText {
     if ($status <= 0) {
 	return ($status, $msg);
     } else {
-	unless(open(FINFO, ">$importDir/$id.file")) {
+	unless(open(FINFO, ">$outputPath/out.file")) {
 	    return (0, "unable to write finfo: $!");
 	}
 	print FINFO $xmlHeader;
@@ -168,7 +163,7 @@ sub extractCitations {
 
     my $rXML = ParsCit::Controller::extractCitations($textFile);
 
-    unless(open(CITE, ">:utf8", "$importDir/$id.parscit")) {
+    unless(open(CITE, ">:utf8", "$outputPath/out.parscit")) {
 	return (0, "Unable to open parscit file: $!");
     }
 
@@ -195,7 +190,7 @@ sub extractHeader {
 	return ($status, $msg);
     }
 
-    unless(open(HEAD, ">:utf8", "$importDir/$id.header")) {
+    unless(open(HEAD, ">:utf8", "$outputPath/out.header")) {
 	return (0, "Unable to open header file: $!");
     }
 
