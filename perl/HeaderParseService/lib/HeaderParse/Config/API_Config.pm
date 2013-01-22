@@ -17,23 +17,15 @@ require Exporter;
 use vars qw($VERSION @ISA @EXPORT @EXPORT_OK %EXPORT_TAGS);
 
 @ISA = qw(Exporter);
-@EXPORT =  qw($SVM_Dir $offlineD $Database_Dir $Data_Dir $Tmp_Dir $nMinHeaderLength $nMaxHeaderLength $ServerURL $ServerPort $algName $algVersion);
+@EXPORT =  qw($Classifier $offlineD $Database_Dir $Data_Dir $Tmp_Dir $nMinHeaderLength $nMaxHeaderLength $ServerURL $ServerPort $algName $algVersion);
 
-#$SVM_Dir = "$FindBin::Bin/../svm-light/";
 #$Database_Dir = "$FindBin::Bin/../lib/HeaderParse/database";
 #$Data_Dir = "$FindBin::Bin/../lib/HeaderParse/data/";
 #$offlineD = "$FindBin::Bin/../lib/HeaderParse/OfflineFiles/";
 
 $HeaderParseHome = "$FindBin::Bin/HeaderParseService";
 
-if ("$^0" == 'darwin') {
-  $SVM_Dir = "$HeaderParseHome/svm-light-osx/";
-}
-else {
-  $SVM_Dir = "$HeaderParseHome/svm-light-linux/";
-}
-
-system("chmod","u+x","$SVM_Dir/svm_classify","$SVM_Dir/svm_learn");
+$Classifier = "svm_classify5"; # assumes installed to system path
 
 $Database_Dir = "$HeaderParseHome/resources/database/";
 $Data_Dir = "$HeaderParseHome/resources/data/";

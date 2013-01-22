@@ -1,4 +1,5 @@
-# -*- encoding: utf-8 -*-
+# encoding: UTF-8
+
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
@@ -23,4 +24,10 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency 'rspec'
   gem.add_development_dependency 'pry'
   gem.add_development_dependency 'pry-debugger'
+
+  gem.requirements << 'java'
+  gem.requirements << 'perl'
+  gem.requirements << 'for the :citeseer algorithm, the CRF++ Conditional Random Fields library (try "which crf_test")'
+  gem.requirements << 'for the :cb2bib algorithm, the cb2bib citation extraction tool'
+
 end

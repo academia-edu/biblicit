@@ -24,7 +24,7 @@ use HeaderParse::API::LoadInformation;
 use HeaderParse::Config::API_Config;
 use HeaderParse::API::AssembleXMLMetadata;
 use vars qw($debug %dictH %nameH %firstnameH %lastnameH %BasicFeatureDictH %InverseTagMap);
-use vars qw($SVM_Dir $offlineD $Tmp_Dir $nMinHeaderLength $nMaxHeaderLength);
+use vars qw($Classifier $offlineD $Tmp_Dir $nMinHeaderLength $nMaxHeaderLength);
 use HeaderParse::API::Function qw(&AddrMatch &printDict &GenTrainVecMatrix &LineFeatureRepre &FillSpace &SeparatePunc);
 
 my $FeatureDictH = \%BasicFeatureDictH;
@@ -39,9 +39,6 @@ my $TrainH;
 my $TotalHea = 0;
 
 my $timestamp;
-
-my $learner = "${SVM_Dir}svm_learn";
-my $Classifier = "${SVM_Dir}svm_classify";
 
 #my $offlineD = "../../offline/";
 #my $TestOutF = "$TestF"."\.parsed";

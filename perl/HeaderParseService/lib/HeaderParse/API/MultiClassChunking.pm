@@ -21,7 +21,7 @@ use HeaderParse::API::LoadInformation;
 use vars qw($debug %emailH %urlH);
 
 use HeaderParse::API::Function qw(&AddrMatch &printDict &GenTrainVecMatrix &LineFeatureRepre2 &SeparatePunc);
-use HeaderParse::Config::API_Config qw($offlineD $SVM_Dir $Tmp_Dir);
+use HeaderParse::Config::API_Config qw($offlineD $Classifier $Tmp_Dir);
 #return chunk array, but it could contain only text, not real @; needs further processing
 
 #my $offlineD = "../../offline/";
@@ -30,7 +30,6 @@ use HeaderParse::Config::API_Config qw($offlineD $SVM_Dir $Tmp_Dir);
 
 #my $tmpCacheVec = "$Tmp_Dir/tmpVec";
 #my $SVMTmpResult = "$Tmp_Dir/tmpresult";
-my $Classifier = "$SVM_Dir"."svm_classify";
 
 sub LocateEmailFromComponent() {
   my $component = shift;
