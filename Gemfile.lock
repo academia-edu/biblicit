@@ -1,0 +1,52 @@
+PATH
+  remote: .
+  specs:
+    citeseer_core (1.0)
+      activesupport
+
+GEM
+  remote: http://rubygems.org/
+  specs:
+    activesupport (3.2.11)
+      i18n (~> 0.6)
+      multi_json (~> 1.0)
+    coderay (1.0.8)
+    columnize (0.3.6)
+    debugger (1.2.4)
+      columnize (>= 0.3.1)
+      debugger-linecache (~> 1.1.1)
+      debugger-ruby_core_source (~> 1.1.7)
+    debugger-linecache (1.1.2)
+      debugger-ruby_core_source (>= 1.1.1)
+    debugger-ruby_core_source (1.1.7)
+    diff-lcs (1.1.3)
+    i18n (0.6.1)
+    method_source (0.8.1)
+    multi_json (1.5.0)
+    pry (0.9.11.4)
+      coderay (~> 1.0.5)
+      method_source (~> 0.8)
+      slop (~> 3.4)
+    pry-debugger (0.2.1)
+      debugger (~> 1.2.0)
+      pry (~> 0.9.10)
+    rake (10.0.3)
+    rspec (2.12.0)
+      rspec-core (~> 2.12.0)
+      rspec-expectations (~> 2.12.0)
+      rspec-mocks (~> 2.12.0)
+    rspec-core (2.12.2)
+    rspec-expectations (2.12.1)
+      diff-lcs (~> 1.1.3)
+    rspec-mocks (2.12.1)
+    slop (3.4.3)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  citeseer_core!
+  pry
+  pry-debugger
+  rake
+  rspec
