@@ -10,7 +10,7 @@ Extract citations from PDFs.
   Biblicit.extract(file: "myfile.pdf", tool: :citeseer)
 
   # Extract metadata from the contents of a PDF using cb2bib
-  Biblicit.extract(contents: IO.read("myfile.pdf"), tool: cb2bib, remote: true)
+  Biblicit.extract(contents: IO.read("myfile.pdf"), tool: :cb2bib, remote: true)
 ```
 
 ## Algorithms
@@ -31,7 +31,7 @@ Uses pdf2text from [Xpdf](http://www.foolabs.com/xpdf/download.html) to extract 
 
 ### CRF++
  
-#### From source
+##### From source
 
     wget http://crfpp.googlecode.com/files/CRF%2B%2B-0.57.tar.gz
     tar xvzf CRF++-0.57.tar.gz
@@ -40,21 +40,21 @@ Uses pdf2text from [Xpdf](http://www.foolabs.com/xpdf/download.html) to extract 
     make
     sudo make install
 
-#### On Debian/Ubuntu
+##### On Debian/Ubuntu
 
     sudo apt-add-repository 'deb http://cl.naist.jp/~eric-n/ubuntu-nlp oneiric all'
     sudo apt-get update
     sudo apt-get install libcrf++
 
-#### On OS X with Homebrew
+##### On OS X with Homebrew
 
     brew install crf++
 
-### svm-light 5
+### svm-light
 
-(Note: Not the current version!)
+The included model requires version 5, not the current version.
 
-#### From source
+##### From source
 
     mkdir svm_light5
     cd svm_light5
@@ -64,11 +64,11 @@ Uses pdf2text from [Xpdf](http://www.foolabs.com/xpdf/download.html) to extract 
     sudo ln -s $(readlink -f "$(dirname svm_classify)/$(basename svm_classify)") /usr/bin/svm_classify5
     sudo ln -s $(readlink -f "$(dirname svm_learn)/$(basename svm_learn)") /usr/bin/svm_learn5
 
-(Note: On OS X you'll need to use greadlink instead of readlink if you have coreutils installed, or another workaround for the absence of -f.)
+Note: On OS X you'll need to use greadlink instead of readlink if you have coreutils installed, or another workaround for the absence of `-f`.
 
 ### Perl modules
 
-#### From CPAN
+##### From CPAN
 
     sudo cpan install DBI
     sudo cpan install Digest::SHA1
@@ -78,7 +78,7 @@ Uses pdf2text from [Xpdf](http://www.foolabs.com/xpdf/download.html) to extract 
 
 ### cb2bib
 
-#### From source
+##### From source
 
     # TODO: Does not work as-is on OS X
     wget http://www.molspaces.com/dl/progs/cb2bib-1.4.9.tar.gz
@@ -88,12 +88,12 @@ Uses pdf2text from [Xpdf](http://www.foolabs.com/xpdf/download.html) to extract 
     make
     sudo make install
 
-#### On Debian/Ubuntu
+##### On Debian/Ubuntu
 
     sudo apt-get install cb2bib
 
 ### Other
 
-#### On Debian/Ubuntu
+##### On Debian/Ubuntu
 
     sudo apt-get install libicu-dev
