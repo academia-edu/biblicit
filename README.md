@@ -93,10 +93,11 @@ Requires Qt & X11, unfortunately, and still requires a hack to work on recent ve
 
     wget http://www.molspaces.com/dl/progs/cb2bib-1.4.9.tar.gz
     tar -xzvf cb2bib-1.4.9.tar.gz
+    cd cb2bib-1.4.9
     ./configure --prefix /Applications/cb2Bib
     make # fails first time...
     mv src/Makefile src/Makefile.old
-    sed 's|-lX11 -framework QtWebKit|-lX11 -L/usr/X11/lib -I/usr/X11/include|' src/Makefile.old > src/Makefile
+    sed 's|-lX11 -framework QtWebKit|-lX11 -L/usr/X11/lib -I/usr/X11/include -framework QtWebKit|' src/Makefile.old > src/Makefile
     make # should succeed now
     sudo make install
 
@@ -116,4 +117,4 @@ Copyright Academia.edu or the original author(s).
 
 Apache licensed (see LICENSE.TXT).
 
-Please note svm-light is free only for non-commercial use, but is used by this gem by permission of the author. For conditions on additional use see [the website](http://svmlight.joachims.org/).
+Please note svm-light is in general free only for non-commercial use, but can be used in this gem by permission of the author. For conditions on additional uses see [the website](http://svmlight.joachims.org/).
