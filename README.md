@@ -109,6 +109,7 @@ Requires Qt & X11, unfortunately, and still requires a hack to work on recent ve
 
 ##### On Debian/Ubuntu
 
+    sudo apt-get install poppler-utils
     sudo apt-get install libicu-dev
 
 ## Copying
