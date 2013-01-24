@@ -72,8 +72,8 @@ Note: On OS X you'll need to use greadlink instead of readlink if you have coreu
 
     sudo cpan install DBI
     sudo cpan install Digest::SHA1
-    sudo cpan install Log:Log4perl
-    sudo cpan install Log:Dispatch
+    sudo cpan install Log::Log4perl
+    sudo cpan install Log::Dispatch
     sudo cpan install String::Approx
 
 ### cb2bib
