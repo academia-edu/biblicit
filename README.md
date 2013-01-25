@@ -3,6 +3,7 @@ biblicit
 
 Extract citations from PDFs.
 
+
 ## Usage
 
 ```ruby
@@ -12,6 +13,7 @@ Extract citations from PDFs.
   # Extract metadata from the contents of a PDF using cb2bib
   Biblicit.extract(contents: IO.read("myfile.pdf"), tool: :cb2bib, remote: true)
 ```
+
 
 ## Algorithms
 
@@ -27,9 +29,58 @@ Wrapper around [cb2Bib](http://www.molspaces.com/cb2bib/) in command-line mode.
 
 Uses pdf2text from [Xpdf](http://www.foolabs.com/xpdf/download.html) to extract text from the PDF, uses an apparently less-sophisticated parsing algorithm than the CiteSeerX code to parse metadata, but then, if :remote=true, scrapes one of a large number of journal or public repository websites for a structured version of the citation data.
 
+
 ## Requirements
 
-### CRF++
+There are a lot, but you may not need all of them, depending on your use case.
+
+
+### Text extraction
+
+Different tools are used for different input file formats.
+
+#### PDF - [Poppler](http://poppler.freedesktop.org/)
+
+This provides `pdftotext`. You could install `xpdf` instead.
+
+##### On Debian/Ubuntu
+
+    sudo apt-get install poppler-utils
+
+##### On OS X with Homebrew
+
+    brew install poppler
+
+#### Postscript - [Ghostscript](http://www.ghostscript.com/)
+
+This provides `ps2ascii`.
+
+##### On Debian/Ubuntu
+
+    sudo apt-get install ghostscript
+
+##### On OS X with Homebrew
+
+    brew install ghostscript
+
+#### Other (e.g. docx) - [AbiWord](http://www.abisource.com/)
+
+This provides `abiword`.
+
+##### On Debian/Ubuntu
+
+    sudo apt-get install abiword
+
+##### On OS X
+
+As of writing, you're out of luck, because AbiWord doesn't compile on recent versions of OS X. According to their website, however, this is being actively worked on.
+
+
+### Required to use the CiteSeer algorithm
+
+#### CRF++
+
+Required for bibliography extraction (reference information for works cited in the input).
  
 ##### From source
 
@@ -50,7 +101,9 @@ Uses pdf2text from [Xpdf](http://www.foolabs.com/xpdf/download.html) to extract 
 
     brew install crf++
 
-### svm-light
+#### svm-light
+
+Required for header extraction (reference information for the input work itself).
 
 The included model requires version 5, not the current version.
 
@@ -66,7 +119,7 @@ The included model requires version 5, not the current version.
 
 Note: On OS X you'll need to use greadlink instead of readlink if you have coreutils installed, or another workaround for the absence of `-f`.
 
-### Perl modules
+#### Perl modules
 
 ##### From CPAN
 
@@ -76,7 +129,10 @@ Note: On OS X you'll need to use greadlink instead of readlink if you have coreu
     sudo cpan install Log::Dispatch
     sudo cpan install String::Approx
 
-### cb2bib
+
+### Required to use the cb2bib algorithm
+
+#### cb2Bib
 
 ##### From source (Linux)
 
@@ -105,12 +161,15 @@ Requires Qt & X11, unfortunately, and still requires a hack to work on recent ve
 
     sudo apt-get install cb2bib
 
+
 ### Other
+
+(I'm not currently sure what this was required for; TODO figure it out!)
 
 ##### On Debian/Ubuntu
 
-    sudo apt-get install poppler-utils
     sudo apt-get install libicu-dev
+
 
 ## Copying
 

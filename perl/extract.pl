@@ -8,8 +8,6 @@ use lib "$FindBin::Bin/ParsCit/lib";
 use lib "$FindBin::Bin/HeaderParseService/lib";
 
 use DBI;
-use File::Copy;
-use FileConverter::Controller;
 use DocFilter::Filter;
 use ParsCit::Controller;
 use HeaderParse::API::Parser;
@@ -48,53 +46,36 @@ sub import {
     
     my ($status, $msg) = prep($filePath, $id);
     if ($status == 0) {
-	print ERR "$id: $msg\n";
+	    print ERR "$id: $msg\n";
     }
     if ($status == 1) {
-	print LOG "$id\n";
+	    print LOG "$id\n";
     }
 }
 
 
 sub prep {
-    my ($filePath, $id) = @_;
+    my ($textFile, $id) = @_;
 
-    $filePath =~ m/^.*(\.(ps|pdf)(\.g?z)?)$/i;
-    my $ext = $1;
-
-    my $targetPath = "$outputPath/out$ext";
-
-    unless(copy($filePath, $targetPath)) {
-	    return (0, "unable to copy $filePath to $targetPath: $!");
-    }
-
-    my $textFile;
-    my $conversionSuccess = 0;
-
-    my ($status, $msg, $textPath) = extractText($targetPath, $id);
-    if ($status > 0) {
-	$textFile = $textPath;
-	my ($fstatus, $msg) = filter($textFile);
-	if ($fstatus > 0) {
-	    $conversionSuccess = 1;
-	}
-    } else {
-	return ($status, $msg);
+    # why do we do this twice?
+	  my ($fstatus, $msg) = filter($textFile);
+	  if ($fstatus <= 0) {
+	    return ($status, $msg);
     }
 
     my ($fstatus, $msg) = filter($textFile);
     if ($fstatus <= 0) {
-	return ($fstatus, $msg);
+	    return ($fstatus, $msg);
     }
 
     my ($ecstatus, $msg) = extractCitations($textFile, $id);
     if ($ecstatus <= 0) {
-	return ($estatus, $msg);
+	    return ($estatus, $msg);
     }
     
     my ($ehstatus, $msg) = extractHeader($textFile, $id);
     if ($ehstatus <= 0) {
-	return ($ehstatus, $msg);
+	    return ($ehstatus, $msg);
     }    
 
     return (1, "");

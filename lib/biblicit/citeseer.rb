@@ -7,6 +7,7 @@ require 'nokogiri'
 module CiteSeer
 
   PERL_DIR = "#{File.dirname(__FILE__)}/../../perl"
+  SH_DIR = "#{File.dirname(__FILE__)}/../../sh"
 
   def self.extract(in_file, opts)
     ParseOperation.new(in_file)
@@ -16,7 +17,8 @@ module CiteSeer
 
     def initialize(in_file)
       Dir.mktmpdir do |out_dir|
-        `#{PERL_DIR}/extract.pl #{in_file.shellescape} #{out_dir}`
+        `#{SH_DIR}/convert_to_text.sh #{in_file.shellescape} #{out_dir}/out.txt`
+        `#{PERL_DIR}/extract.pl #{out_dir}/out.txt #{out_dir}`
         @header_xml = IO.read("#{out_dir}/out.header")
         @citations_xml = IO.read("#{out_dir}/out.parscit")
       end

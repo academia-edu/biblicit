@@ -50,7 +50,14 @@ module Cb2Bib
     end
 
     def cb2bib_config(remote)
-      "[cb2Bib]\nAutomaticQuery=#{!!remote}"
+      """
+      [cb2Bib]
+      AutomaticQuery=#{!!remote}
+
+      [c2bPdfImport]
+      Pdf2TextBin=#{File.dirname(__FILE__)}/../../sh/convert_to_text.sh
+      Pdf2TextArg=
+      """
     end
 
     def cleaned_field(field)
