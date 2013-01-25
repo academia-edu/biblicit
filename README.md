@@ -4,38 +4,41 @@ biblicit
 Extract citations from PDFs.
 
 
-## Usage
+# Usage
 
 ```ruby
   # Extract metadata from a file using the code from CiteSeerX
-  Biblicit.extract(file: "myfile.pdf", tool: :citeseer)
+  result = Biblicit.extract(file: "myfile.pdf", tool: :citeseer)
 
   # Extract metadata from the contents of a PDF using cb2bib
-  Biblicit.extract(contents: IO.read("myfile.pdf"), tool: :cb2bib, remote: true)
+  result = Biblicit.extract(contents: IO.read("myfile.pdf"), tool: :cb2bib, remote: true)
+
+  # See reference information for "myfile.pdf"
+  hash = result.header
 ```
 
 
-## Algorithms
+# Algorithms
 
 ### CiteSeer (default)
 
 Wrapper around Perl code extracted from [CiteSeerX](http://citeseer.ist.psu.edu/). 
 
-Uses [Apache PDFBox](http://pdfbox.apache.org/) to extract text from the PDF, uses a model trained with the [svm-light](http://svmlight.joachims.org/) Support Vector Machine library to extract citation data for the PDF itself, and then uses [ParsCit](http://aye.comp.nus.edu.sg/parsCit/)'s model trained with the [CRF++](http://code.google.com/p/crfpp/) Conditional Random Fields library to parse citations from the PDF's bibliography, if any.
+Uses a model trained with the [svm-light](http://svmlight.joachims.org/) Support Vector Machine library to extract citation data for the PDF itself, and then uses [ParsCit](http://aye.comp.nus.edu.sg/parsCit/)'s model trained with the [CRF++](http://code.google.com/p/crfpp/) Conditional Random Fields library to parse citations from the PDF's bibliography, if any.
 
 ### cb2Bib
 
 Wrapper around [cb2Bib](http://www.molspaces.com/cb2bib/) in command-line mode.
 
-Uses pdf2text from [Xpdf](http://www.foolabs.com/xpdf/download.html) to extract text from the PDF, uses an apparently less-sophisticated parsing algorithm than the CiteSeerX code to parse metadata, but then, if :remote=true, scrapes one of a large number of journal or public repository websites for a structured version of the citation data.
+Uses an apparently less-sophisticated parsing algorithm than the CiteSeerX code to parse metadata, but then, if :remote=true, scrapes one of a large number of journal or public repository websites for a structured version of the citation data.
 
 
-## Requirements
+# Requirements
 
 There are a lot, but you may not need all of them, depending on your use case.
 
 
-### Text extraction
+## Required to support various input file formats
 
 Different tools are used for different input file formats.
 
@@ -76,7 +79,7 @@ This provides `abiword`.
 As of writing, you're out of luck, because AbiWord doesn't compile on recent versions of OS X. According to their website, however, this is being actively worked on.
 
 
-### Required to use the CiteSeer algorithm
+## Required to use the CiteSeer algorithm
 
 #### CRF++
 
@@ -117,7 +120,7 @@ The included model requires version 5, not the current version.
     sudo ln -s $(readlink -f "$(dirname svm_classify)/$(basename svm_classify)") /usr/bin/svm_classify5
     sudo ln -s $(readlink -f "$(dirname svm_learn)/$(basename svm_learn)") /usr/bin/svm_learn5
 
-Note: On OS X you'll need to use greadlink instead of readlink if you have coreutils installed, or another workaround for the absence of `-f`.
+Note: On OS X you'll need to use `greadlink` instead of `readlink` if you have `coreutils` installed, or another workaround for the absence of `-f`.
 
 #### Perl modules
 
@@ -130,7 +133,7 @@ Note: On OS X you'll need to use greadlink instead of readlink if you have coreu
     sudo cpan install String::Approx
 
 
-### Required to use the cb2bib algorithm
+## Required to use the cb2bib algorithm
 
 #### cb2Bib
 
@@ -162,7 +165,7 @@ Requires Qt & X11, unfortunately, and still requires a hack to work on recent ve
     sudo apt-get install cb2bib
 
 
-### Other
+## Other
 
 (I'm not currently sure what this was required for; TODO figure it out!)
 
@@ -171,7 +174,7 @@ Requires Qt & X11, unfortunately, and still requires a hack to work on recent ve
     sudo apt-get install libicu-dev
 
 
-## Copying
+# Copying
 
 Copyright Academia.edu or the original author(s).
 
