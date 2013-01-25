@@ -28,7 +28,7 @@ Gem::Specification.new do |gem|
   gem.requirements << 'For PDFs, Poppler or XPDF (try "which pdftotext")'
   gem.requirements << 'For Postscript files, Ghostscript (try "which ps2ascii")'
   gem.requirements << 'For word processor files, AbiWord (try "which abiword")'
-  gem.requirements << 'For the :citeseer algorithm, Perl, CPAN, CRF++ (try "which crf_test"), and svm-light 5.0, aliased to svm_classify5 (try "svm_classify --version")'
+  gem.requirements << 'For the :citeseer algorithm, Perl, CPAN, CRF++ (try "which crf_test"), and svm-light 5.0, aliased to svm_classify5 (try "svm_classify -h")'
   gem.requirements << 'For the :cb2bib algorithm, cb2Bib (try "which cb2bib")'
 
 end
