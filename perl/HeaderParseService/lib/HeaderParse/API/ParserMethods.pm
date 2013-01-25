@@ -40,11 +40,6 @@ my $TotalHea = 0;
 
 my $timestamp;
 
-#my $offlineD = "../../offline/";
-#my $TestOutF = "$TestF"."\.parsed";
-#my $tmpCacheVecB = "$Tmp_Dir/tmpVec";
-#my $SVMTmpResultB = "$Tmp_Dir/tmpresult";
-
 my $FeatureDict = "$offlineD"."WrapperBaseFeaDict";
 my $ContextFeatureDict = "$offlineD"."WrapperContextFeaDict";
 my $SpaceAuthorFeatureDictF = "$offlineD"."WrapperSpaceAuthorFeaDict";
@@ -89,8 +84,6 @@ sub Parse{
     my $header=shift;
     $timestamp = shift;
     my $success = 0;
-   # $tmpCacheVec = $tmpCacheVec . "\_$timestamp\_";
-   # $SVMTmpResult = $SVMTmpResult . "\_$timestamp\_";
     my $tmpCacheVec = "$Tmp_Dir/tmpVec"."\_$timestamp\_";
 
     my $SVMTmpResult = "$Tmp_Dir/tmpresult"."\_$timestamp\_";

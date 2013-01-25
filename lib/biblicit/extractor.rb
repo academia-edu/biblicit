@@ -23,6 +23,7 @@ module Biblicit
 private
 
   def self.extract_from_file(file, opts)
+    file = File.realpath(file)
     tool = opts.delete(:tool) || :citeseer
 
     if tool == :citeseer
