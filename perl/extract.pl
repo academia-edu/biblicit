@@ -3,12 +3,10 @@
 use FindBin;
 
 use lib "$FindBin::Bin/FileConversionService/lib";
-use lib "$FindBin::Bin/DocFilter/lib";
 use lib "$FindBin::Bin/ParsCit/lib";
 use lib "$FindBin::Bin/HeaderParseService/lib";
 
 use DBI;
-use DocFilter::Filter;
 use ParsCit::Controller;
 use HeaderParse::API::Parser;
 use HeaderParse::Config::API_Config;
@@ -57,17 +55,6 @@ sub import {
 sub prep {
     my ($textFile, $id) = @_;
 
-    # why do we do this twice?
-	  my ($fstatus, $msg) = filter($textFile);
-	  if ($fstatus <= 0) {
-	    return ($status, $msg);
-    }
-
-    my ($fstatus, $msg) = filter($textFile);
-    if ($fstatus <= 0) {
-	    return ($fstatus, $msg);
-    }
-
     my ($ecstatus, $msg) = extractCitations($textFile, $id);
     if ($ecstatus <= 0) {
 	    return ($estatus, $msg);
@@ -79,61 +66,6 @@ sub prep {
     }    
 
     return (1, "");
-}
-
-
-
-sub checkPDF {
-    my $url = shift;
-    if ($url =~ m/pdf(\.g?z)?$/i) {
-	return 1;
-    } else {
-	return 0;
-    }
-}
-
-
-sub extractText {
-    my ($filePath, $id) = @_;
-    my ($status, $msg, $textFile, $rTrace, $rCheckSums) =
-	FileConverter::Controller::extractText($filePath);
-    if ($status <= 0) {
-	return ($status, $msg);
-    } else {
-	unless(open(FINFO, ">$outputPath/out.file")) {
-	    return (0, "unable to write finfo: $!");
-	}
-	print FINFO $xmlHeader;
-	print FINFO "<conversionTrace>";
-	print FINFO join ",", @$rTrace;
-	print FINFO "</conversionTrace>\n";
-	print FINFO "<checksums>\n";
-	foreach my $checkSum(@$rCheckSums) {
-	    print FINFO "<checksum>\n";
-	    print FINFO "<fileType>".$checkSum->getFileType()."</fileType>\n";
-	    print FINFO "<sha1>".$checkSum->getSHA1()."</sha1>\n";
-	    print FINFO "</checksum>\n";
-	}
-	print FINFO "</checkSums>\n";
-	close FINFO;
-    }
-    return (1, "", $textFile);
-}
-
-
-sub filter {
-    my $textFile = shift;
-    my ($sysStatus, $filterStatus, $msg) =
-	DocFilter::Filter::filter($textFile);
-    if ($sysStatus > 0) {
-	if ($filterStatus > 0) {
-	    return (1);
-	} else {
-	    return (0, "document failed filtration");
-	}
-    } else {
-	return (0, "An error occurred during filtration: $msg");
-    }
 }
 
 
