@@ -25,9 +25,10 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency 'pry'
   gem.add_development_dependency 'pry-debugger'
 
-  gem.requirements << 'java'
-  gem.requirements << 'perl'
-  gem.requirements << 'for the :citeseer algorithm, the CRF++ Conditional Random Fields library (try "which crf_test")'
-  gem.requirements << 'for the :cb2bib algorithm, the cb2bib citation extraction tool'
+  gem.requirements << 'For PDFs, Poppler or XPDF (try "which pdftotext")'
+  gem.requirements << 'For Postscript files, Ghostscript (try "which ps2ascii")'
+  gem.requirements << 'For word processor files, AbiWord (try "which abiword")'
+  gem.requirements << 'For the :citeseer algorithm, Perl, CPAN, CRF++ (try "which crf_test"), and svm-light 5.0, aliased to svm_classify5 (try "svm_classify --version")'
+  gem.requirements << 'For the :cb2bib algorithm, cb2Bib (try "which cb2bib")'
 
 end
