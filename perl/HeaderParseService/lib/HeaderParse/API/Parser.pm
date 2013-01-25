@@ -27,8 +27,6 @@ sub _parseHeader{
     my $status = 1;
     my $msg = "";
 
-#    my $file = "$repositoryLocation/$fileID";
-#    print "file: $file\n";
     my $file = $fileID;
 
     if (! -e $file) {

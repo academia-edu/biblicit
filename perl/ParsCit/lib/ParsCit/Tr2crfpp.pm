@@ -36,9 +36,6 @@ readDict($dictFile);
 sub prepData {
     my ($rCiteText, $filename) = @_;
     my $tmpfile = buildTmpFile($filename);
-#    $tmpfile = "$tmpDir/$tmpfile";
-
-#    print $$rCiteText;
 
     unless (open(TMP, ">:utf8", $tmpfile)) {
 	fatal("Could not open tmp file $tmpDir/$tmpfile for writing.");
@@ -270,10 +267,8 @@ sub decode {
 	$codeTokens[$#codeTokens] = $class;
 	@codeLines[$i] = join "\t", @codeTokens;
 	
-#	print Encode::decode_utf8(@codeLines[$i]), "\n";
     }
 
-#    unless (open(OUT, ">:utf8", $outFile)) {
     unless (open(OUT, ">:utf8", $outFile)) {
 	fatal("Could not open crf output file for writing: $!");
 	return;
@@ -283,15 +278,6 @@ sub decode {
     }
     close OUT;
 
-#    open (IN, "<:utf8", $outFile);
-#    my $text;
-#    {
-#	local $/ = undef;
-#	$text = <IN>;
-#    }
-#    close IN;
-#    print "$text\n";
-    
     return 1;
 
 }  # decode

@@ -24,13 +24,6 @@ use HeaderParse::API::Function qw(&AddrMatch &printDict &GenTrainVecMatrix &Line
 use HeaderParse::Config::API_Config qw($offlineD $Classifier $Tmp_Dir);
 #return chunk array, but it could contain only text, not real @; needs further processing
 
-#my $offlineD = "../../offline/";
-#my $tmpCacheVec = "$offlineD"."tmpVec";
-#my $SVMTmpResult = "$offlineD"."tmpresult";
-
-#my $tmpCacheVec = "$Tmp_Dir/tmpVec";
-#my $SVMTmpResult = "$Tmp_Dir/tmpresult";
-
 sub LocateEmailFromComponent() {
   my $component = shift;
   my %FindH = ();

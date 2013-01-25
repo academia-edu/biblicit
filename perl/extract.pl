@@ -1,19 +1,16 @@
 #!/usr/bin/perl -CSD
-#use strict;
+use strict;
 use FindBin;
 
 use lib "$FindBin::Bin/FileConversionService/lib";
 use lib "$FindBin::Bin/ParsCit/lib";
 use lib "$FindBin::Bin/HeaderParseService/lib";
 
-use DBI;
 use ParsCit::Controller;
 use HeaderParse::API::Parser;
 use HeaderParse::Config::API_Config;
 
 my $logDir = "$FindBin::Bin/log";
-
-my $xmlHeader = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
 
 system("mkdir","-p","$logDir");
 
@@ -57,7 +54,7 @@ sub prep {
 
     my ($ecstatus, $msg) = extractCitations($textFile, $id);
     if ($ecstatus <= 0) {
-	    return ($estatus, $msg);
+	    return ($ecstatus, $msg);
     }
     
     my ($ehstatus, $msg) = extractHeader($textFile, $id);
