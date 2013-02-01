@@ -108,7 +108,7 @@ Required for bibliography extraction (reference information for works cited in t
 
 Required for header extraction (reference information for the input work itself).
 
-The included model requires version 5, not the current version.
+The included model requires version 5, not the current version. You can specify where you have installed svm-light by setting the SVM_LIGHT_HOME environment variable.
 
 ##### From source
 

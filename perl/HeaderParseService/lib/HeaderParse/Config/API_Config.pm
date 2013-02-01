@@ -25,7 +25,12 @@ use vars qw($VERSION @ISA @EXPORT @EXPORT_OK %EXPORT_TAGS);
 
 $HeaderParseHome = "$FindBin::Bin/HeaderParseService";
 
-$Classifier = "svm_classify5"; # assumes installed to system path
+if ($ENV{'SVM_LIGHT_HOME'}.length) {
+  $Classifier = "$ENV{'SVM_LIGHT_HOME'}/svm_classify" 
+}
+else {
+  $Classifier = "svm_classify5"; # assume on path
+}
 
 $Database_Dir = "$HeaderParseHome/resources/database/";
 $Data_Dir = "$HeaderParseHome/resources/data/";
