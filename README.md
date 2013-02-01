@@ -30,7 +30,7 @@ Uses a model trained with the [svm-light](http://svmlight.joachims.org/) Support
 
 Wrapper around [cb2Bib](http://www.molspaces.com/cb2bib/) in command-line mode.
 
-Uses an apparently less-sophisticated parsing algorithm than the CiteSeerX code to parse metadata, but then, if :remote=true, scrapes one of a large number of journal or public repository websites for a structured version of the citation data.
+Uses an apparently less-sophisticated parsing algorithm than the CiteSeerX code to parse metadata, but then, if :remote=true, scrapes one of a large number of journal or public repository websites for a structured version of the citation data. Warning: sometimes it finds the wrong work!
 
 
 # Requirements
@@ -119,21 +119,15 @@ The included model requires version 5, not the current version. You can specify 
     wget http://download.joachims.org/svm_light/v5.00/svm_light.tar.gz
     tar -xzf svm_light.tar.gz
     make
-    sudo ln -s $(readlink -f "$(dirname svm_classify)/$(basename svm_classify)") /usr/bin/svm_classify5
-    sudo ln -s $(readlink -f "$(dirname svm_learn)/$(basename svm_learn)") /usr/bin/svm_learn5
-
-Note: On OS X you'll need to use `greadlink` instead of `readlink` if you have `coreutils` installed, or another workaround for the absence of `-f`.
+    echo "export SVM_LIGHT_HOME=`pwd`" >> ~/.profile # or .bashrc or whatever
+    source ~/.profile
 
 #### Perl modules
 
 ##### From CPAN
 
-    sudo cpan install DBI
     sudo cpan install Digest::SHA1
-    sudo cpan install Log::Log4perl
-    sudo cpan install Log::Dispatch
     sudo cpan install String::Approx
-
 
 ## Required to use the cb2bib algorithm
 
