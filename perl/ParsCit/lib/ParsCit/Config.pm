@@ -30,7 +30,7 @@ $dictFile = "resources/parsCitDict.txt";
 $modelFile = "resources/parsCit.model";
 
 if ($ENV{'CRFPP_HOME'}.length) {
-  $crf_test = "$ENV{'CRFPP_HOME'}/crf_test" 
+  $crf_test = "$ENV{'CRFPP_HOME'}/bin/crf_test" 
 }
 else {
   $crf_test = "crf_test"; # assume on path
