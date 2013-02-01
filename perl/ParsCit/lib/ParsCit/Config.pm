@@ -29,7 +29,12 @@ $tmpDir = "tmp";
 $dictFile = "resources/parsCitDict.txt";
 $modelFile = "resources/parsCit.model";
 
-$crf_test = "crf_test"; # assumes crfpp is installed in the system path
+if ($ENV{'CRFPP_HOME'}.length) {
+  $crf_test = "$ENV{'CRFPP_HOME'}/crf_test" 
+}
+else {
+  $crf_test = "crf_test"; # assume on path
+}
 
 ## Citation Context
 

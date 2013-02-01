@@ -84,6 +84,8 @@ As of writing, you're out of luck, because AbiWord doesn't compile on recent ver
 #### CRF++
 
 Required for bibliography extraction (reference information for works cited in the input).
+
+You can specify where you have installed CRF++ by setting the CRFPP_HOME environment variable.
  
 ##### From source
 
