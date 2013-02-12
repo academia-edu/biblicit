@@ -46,6 +46,17 @@ Different tools are used for different input file formats.
 
 This provides `pdftotext`. You could install `xpdf` instead.
 
+##### From source
+
+Requires fontconfig.
+
+    wget http://poppler.freedesktop.org/poppler-0.22.1.tar.gz
+    tar -xzf poppler-0.22.1.tar.gz
+    cd poppler-0.22.1
+    ./configure
+    make
+    sudo make install
+
 ##### On Debian/Ubuntu
 
     sudo apt-get install poppler-utils
@@ -57,6 +68,14 @@ This provides `pdftotext`. You could install `xpdf` instead.
 #### Postscript - [Ghostscript](http://www.ghostscript.com/)
 
 This provides `ps2ascii`.
+
+##### From source
+
+    wget http://downloads.ghostscript.com/public/ghostscript-9.06.tar.gz
+    tar -xzf ghostscript-9.06.tar.gz
+    cd ghostscript-9.06
+    make
+    sudo make install
 
 ##### On Debian/Ubuntu
 
@@ -100,7 +119,7 @@ You can specify where you have installed CRF++ by setting the CRFPP_HOME environ
 
     sudo apt-add-repository 'deb http://cl.naist.jp/~eric-n/ubuntu-nlp oneiric all'
     sudo apt-get update
-    sudo apt-get install libcrf++
+    sudo apt-get install libcrf++ crf++
 
 ##### On OS X with Homebrew
 
