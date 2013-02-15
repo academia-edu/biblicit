@@ -10,13 +10,6 @@ use ParsCit::Controller;
 use HeaderParse::API::Parser;
 use HeaderParse::Config::API_Config;
 
-my $logDir = "$FindBin::Bin/log";
-
-system("mkdir","-p","$logDir");
-
-open (LOG, ">>$logDir/prep.log");
-open (ERR, ">>$logDir/prep.err");
-
 my $argc = scalar(@ARGV);
 
 if ($argc != 2) {
@@ -29,9 +22,6 @@ my $outputPath = $ARGV[1];
 
 import($inputPath, $outputPath);
 
-close LOG;
-close ERR;
-
 exit;
 
 sub import {
@@ -41,10 +31,10 @@ sub import {
     
     my ($status, $msg) = prep($filePath, $id);
     if ($status == 0) {
-	    print ERR "$id: $msg\n";
+	    print STDERR "$id: $msg\n";
     }
     if ($status == 1) {
-	    print LOG "$id\n";
+	    print STDOUT "$id\n";
     }
 }
 

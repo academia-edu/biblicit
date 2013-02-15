@@ -26,13 +26,7 @@ use vars qw(%dictH %nameH %monthH %affiH %addrH %conjH %prepH %postcodeH %cityH 
 
 sub AddrMatch() {
 
-  ###open (MYLOGGER, ">ADDRMATCH.LOG");
-  ###MYLOGGER->autoflush(1);
-
   my $inline = shift;
-
-  ###$inline="Solitary Waves in the Critical Surface Tension Model";
-  ###print MYLOGGER "$inline\n";
 
   my @words = split(/\s+/, $inline);
   my $senLen = 0;
@@ -43,27 +37,15 @@ sub AddrMatch() {
       $senLen ++; # punctuation
   }
 
-  ###foreach $word (@words){
-  ###print MYLOGGER "before : word is \"$word\"\n";
-  ###$word = lc($word);
-  ###print MYLOGGER "after : word is \"$word\"\n";
-  ###}
-
-
-###print MYLOGGER "count is $#words\n";
-
   for my $i(1 .. $#words) {
-   ### print MYLOGGER "word is $words[$i]\n";
     if ($words[$i] !~ /^\W+\s*$/) {
       $senLen ++; # punctuation
     }
     #the first letter is capitalized
     if (($words[$i-1] =~ /^[\p{IsUpper}]/) && ($words[$i] =~ /^[\p{IsUpper}]/)) {
-      ###print MYLOGGER "before: $words[$i-1],$words[$i]\n";
        my $pre = lc($words[$i-1]);
       
        my $now = lc($words[$i]);
-       ###print MYLOGGER "pre is $pre\n now is $now\n";
        if (exists $stateH{"$pre $now"}) { # need to check if it is correct
 	 $words[$i-1] = "";
 	 $words[$i] = ":state:";
@@ -76,8 +58,8 @@ sub AddrMatch() {
        }
      }
    }
-###CLOSE(MYLOGGER);
-  #Broken line is because of the insufficient hard disk
+  
+   #Broken line is because of the insufficient hard disk
   $inline = "@words"; #nice join!
   $inline =~ s/^\s+//g;
   $inline =~ s/\s+$//g;
