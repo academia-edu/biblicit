@@ -25,6 +25,7 @@ module CiteSeer
 
       Dir.mktmpdir do |out_dir|
         `#{SH_DIR}/convert_to_text.sh #{in_file.shellescape} #{out_dir}/out.txt`
+
         output = `#{PERL_DIR}/bin/citeExtract.pl -q#{token_flag} -m extract_all #{out_dir}/out.txt`
         xml = Nokogiri::XML output
         @results = parse(xml)
@@ -38,8 +39,8 @@ module CiteSeer
         parsed = xml.css("algorithm[name=#{algorithm}]")
 
         result = {
-          title: parsed.css('title').text,
-          authors: parsed.css('author').map(&:text),
+          title: parsed.css('title').text.gsub(/\s+/,' ').strip,
+          authors: parsed.css('author').map { |a| a.text.gsub(/\s+/,' ').strip },
           abstract: parsed.css('abstract').text
         }
 

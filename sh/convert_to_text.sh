@@ -9,7 +9,9 @@ INPUT=$1
 OUTPUT=$2
 TYPE=`file -b --mime-type "$INPUT"`
 
-if [[ "$TYPE" == "application/pdf" && -n `which pdftotext` ]]; then
+if [[ "$TYPE" == "text/plain" ]]; then
+  cp "$INPUT" "$OUTPUT";
+elif [[ "$TYPE" == "application/pdf" && -n `which pdftotext` ]]; then
   pdftotext -raw -enc UTF-8 "$INPUT" "$OUTPUT";
 elif [[ "$TYPE" == "application/postscript" && -n `which ps2ascii` ]]; then
   ps2ascii "$INPUT" > "$OUTPUT";
