@@ -18,8 +18,7 @@ module ParsCit
 
     def initialize(in_txt, opts={})
       ENV['CRFPP_HOME'] ||= "#{File.dirname(`which crf_test`)}/../"
-      token_flag = opts[:token] ? 't' : ''
-      output = `#{PERL_DIR}/bin/citeExtract.pl -q#{token_flag} -m extract_all #{in_txt.path}`
+      output = `#{PERL_DIR}/bin/citeExtract.pl -q -m extract_all #{in_txt.path}`
       @results = parse(Nokogiri::XML output)
     end
 
