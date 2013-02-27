@@ -7,14 +7,14 @@ Extract citations from PDFs.
 # Usage
 
 ```ruby
-  # Extract metadata from a file using the code from CiteSeerX
-  result = Biblicit.extract(file: "myfile.pdf", tool: :citeseer)
-
-  # Extract metadata from the contents of a PDF using cb2bib
-  result = Biblicit.extract(contents: IO.read("myfile.pdf"), tool: :cb2bib, remote: true)
+  # Extract metadata from a file using all available tools
+  result = Biblicit.extract(file: "myfile.pdf", tools: [:citeseer, :parshed, :sectlabel, :cb2bib])
 
   # See reference information for "myfile.pdf"
-  hash = result.header
+  result[:citeseer][:title]
+  result[:parshed][:title]
+  result[:citeseer][:authors]
+  # etc
 ```
 
 
@@ -24,13 +24,19 @@ Extract citations from PDFs.
 
 Wrapper around Perl code extracted from [CiteSeerX](http://citeseer.ist.psu.edu/). 
 
-Uses a model trained with the [svm-light](http://svmlight.joachims.org/) Support Vector Machine library to extract citation data for the PDF itself, and then uses [ParsCit](http://aye.comp.nus.edu.sg/parsCit/)'s model trained with the [CRF++](http://code.google.com/p/crfpp/) Conditional Random Fields library to parse citations from the PDF's bibliography, if any.
+Uses a model trained with the [svm-light](http://svmlight.joachims.org/) Support Vector Machine library.
+
+### ParsCit (default) 
+
+Wrapper around Perl & Ruby code from [ParsCit](http://aye.comp.nus.edu.sg/parsCit/), which is included as a Git submodule.
+
+Uses a model trained with the [CRF++](http://code.google.com/p/crfpp/) Conditional Random Fields library.
 
 ### cb2Bib
 
 Wrapper around [cb2Bib](http://www.molspaces.com/cb2bib/) in command-line mode.
 
-Uses an apparently less-sophisticated parsing algorithm than the CiteSeerX code to parse metadata, but then, if :remote=true, scrapes one of a large number of journal or public repository websites for a structured version of the citation data. Warning: sometimes it finds the wrong work!
+Uses an apparently less-sophisticated parsing algorithm than the others to parse metadata, but then, if :remote=true, scrapes one of a large number of journal or public repository websites for a structured version of the citation data. Warning: sometimes it finds the wrong work!
 
 
 # Requirements
@@ -98,11 +104,22 @@ This provides `abiword`.
 As of writing, you're out of luck, because AbiWord doesn't compile on recent versions of OS X. According to their website, however, this is being actively worked on.
 
 
-## Required to use the CiteSeer algorithm
+## Required to use either the ParsCit or CiteSeer algorithms
+
+#### Perl modules
+
+More than these might be required; this is what I had to add to my default installation.
+
+##### From CPAN
+
+    sudo cpan install Digest::SHA1
+    sudo cpan install String::Approx
+    sudo cpan install XML::Writer::String
+    sudo cpan install XML::Twig
+
+## Required to use the ParsCit algorithm
 
 #### CRF++
-
-Required for bibliography extraction (reference information for works cited in the input).
 
 You can specify where you have installed CRF++ by setting the CRFPP_HOME environment variable.
  
@@ -125,6 +142,8 @@ You can specify where you have installed CRF++ by setting the CRFPP_HOME environ
 
     brew install crf++
 
+## Required to use the CiteSeer algorithm
+
 #### svm-light
 
 Required for header extraction (reference information for the input work itself).
@@ -140,13 +159,6 @@ The included model requires version 5, not the current version. You can specify 
     make
     echo "export SVM_LIGHT_HOME=`pwd`" >> ~/.profile # or .bashrc or whatever
     source ~/.profile
-
-#### Perl modules
-
-##### From CPAN
-
-    sudo cpan install Digest::SHA1
-    sudo cpan install String::Approx
 
 ## Required to use the cb2bib algorithm
 
@@ -191,7 +203,7 @@ Requires Qt & X11, unfortunately, and still requires a hack to work on recent ve
 
 # Copying
 
-Copyright Academia.edu or the original author(s).
+Copyright Academia.edu or the original author(s) - see documentation in the included parscit and svm-header-parse directories.
 
 Apache licensed (see LICENSE.TXT).
 
