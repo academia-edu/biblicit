@@ -5,17 +5,15 @@ require 'tempfile'
 module Cb2Bib
 
   def self.extract(file, opts)
-    ParseOperation.new(file, opts)
+    ParseOperation.new(file, opts).result
   end
 
   class ParseOperation
 
+    attr_reader :result
+
     def initialize(file, opts)
       extract_from_file(file, opts[:remote] || false, opts[:sloppy] || true)
-    end
-
-    def header
-      @result
     end
 
   private

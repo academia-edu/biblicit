@@ -25,15 +25,24 @@ private
 
   def self.extract_from_file(file, opts)
     file = File.realpath(file)
-    tool = opts.delete(:tool) || :citeseer
+    default_citeseer_algorithms = [:parshed, :sectlabel]
+    tools = opts.delete(:tools) || default_citeseer_algorithms
 
-    if tool == :citeseer
-      CiteSeer.extract(file, opts)
-    elsif tool == :cb2bib
-      Cb2Bib.extract(file, opts)
-    else
-      raise "Unknown tool #{tool}"
+    result = {}
+
+    if !(tools & default_citeseer_algorithms).empty?
+      result.merge! CiteSeer.extract(file, false)
     end
+
+    if tools.include?(:parshed_token)
+      result.merge!( parshed_token: CiteSeer.extract(file, true)[:parshed] )
+    end
+
+    if tools.include?(:cb2bib)
+      result.merge!( cb2bib: Cb2Bib.extract(file, opts) )
+    end
+
+    result
   end
 
 end
