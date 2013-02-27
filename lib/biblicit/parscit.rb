@@ -22,10 +22,10 @@ module ParsCit
 
       token_flag = opts[:token] ? 't' : ''
 
-      Dir.mktmpdir do |out_dir|
-        `#{SH_DIR}/convert_to_text.sh #{in_file.shellescape} #{out_dir}/out.txt`
+      Tempfile.open(['in','.txt']) do |in_txt|
+        `#{SH_DIR}/convert_to_text.sh #{in_file.shellescape} #{in_txt.path}`
 
-        output = `#{PERL_DIR}/bin/citeExtract.pl -q#{token_flag} -m extract_all #{out_dir}/out.txt`
+        output = `#{PERL_DIR}/bin/citeExtract.pl -q#{token_flag} -m extract_all #{in_txt.path}`
         xml = Nokogiri::XML output
         @results = parse(xml)
       end
