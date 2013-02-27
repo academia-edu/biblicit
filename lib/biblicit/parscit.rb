@@ -7,7 +7,6 @@ require 'nokogiri'
 module ParsCit
 
   PERL_DIR = "#{File.dirname(__FILE__)}/../../parscit"
-  SH_DIR = "#{File.dirname(__FILE__)}/../../sh"
 
   def self.extract(in_file, opts={})
     ParseOperation.new(in_file, opts).results
@@ -17,18 +16,11 @@ module ParsCit
 
     attr_reader :results
 
-    def initialize(in_file, opts={})
-      ENV['CRFPP_HOME'] ||= '/usr/local'
-
+    def initialize(in_txt, opts={})
+      ENV['CRFPP_HOME'] ||= "#{File.dirname(`which crf_test`)}/../"
       token_flag = opts[:token] ? 't' : ''
-
-      Tempfile.open(['in','.txt']) do |in_txt|
-        `#{SH_DIR}/convert_to_text.sh #{in_file.shellescape} #{in_txt.path}`
-
-        output = `#{PERL_DIR}/bin/citeExtract.pl -q#{token_flag} -m extract_all #{in_txt.path}`
-        xml = Nokogiri::XML output
-        @results = parse(xml)
-      end
+      output = `#{PERL_DIR}/bin/citeExtract.pl -q#{token_flag} -m extract_all #{in_txt.path}`
+      @results = parse(Nokogiri::XML output)
     end
 
   private

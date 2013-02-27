@@ -18,14 +18,14 @@ module Cb2Bib
 
   private
 
-    def extract_from_file(pdf, remote=false, sloppy=true)
+    def extract_from_file(doc, remote=false, sloppy=true)
       bib = Tempfile.new(['out','.bib'])
       conf = Tempfile.new(['cb2bib','.conf']) # we'll put our custom configuration here, and then cb2bib will fill in the rest with its defaults
 
       begin
         conf.write(cb2bib_config(remote))
         conf.open # not clear why we have to do this, but otherwise cb2bib doesn't read it
-        `cb2bib #{sloppy ? '--sloppy' : ''} --doc2bib #{pdf.shellescape} #{bib.path} --conf #{conf.path}`
+        `cb2bib #{sloppy ? '--sloppy' : ''} --txt2bib #{doc.path} #{bib.path} --conf #{conf.path}`
         bibtext = bib.read
       ensure
         conf.close!
@@ -51,10 +51,6 @@ module Cb2Bib
       """
       [cb2Bib]
       AutomaticQuery=#{!!remote}
-
-      [c2bPdfImport]
-      Pdf2TextBin=#{File.dirname(__FILE__)}/../../sh/convert_to_text.sh
-      Pdf2TextArg=
       """
     end
 

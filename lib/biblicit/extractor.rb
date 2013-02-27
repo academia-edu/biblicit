@@ -8,6 +8,8 @@ require 'tempfile'
 
 module Biblicit
 
+  SH_DIR = "#{File.dirname(__FILE__)}/../../sh"
+
   def self.extract(opts)
     if (content = opts.delete(:content))
       Tempfile.open('in') do |in_file|
@@ -26,20 +28,24 @@ private
 
   def self.extract_from_file(file, opts)
     file = File.realpath(file)
-    tools = opts.delete(:tools) || [:parshed, :sectlabel]
+    tools = opts.delete(:tools) || [:parshed, :sectlabel, :citeseer]
 
     result = {}
 
-    if !(tools & [:parshed, :sectlabel]).empty?
-      result.merge! ParsCit.extract(file, opts)
-    end
+    Tempfile.open(['in','.txt']) do |in_txt|
+      `#{SH_DIR}/convert_to_text.sh #{file.shellescape} #{in_txt.path}`
 
-    if tools.include?(:citeseer)
-      result.merge!( citeseer: CiteSeer.extract(file, opts) )
-    end
+      if !(tools & [:parshed, :sectlabel]).empty?
+        result.merge! ParsCit.extract(in_txt, opts)
+      end
 
-    if tools.include?(:cb2bib)
-      result.merge!( cb2bib: Cb2Bib.extract(file, opts) )
+      if tools.include?(:citeseer)
+        result.merge!( citeseer: CiteSeer.extract(in_txt, opts) )
+      end
+
+      if tools.include?(:cb2bib)
+        result.merge!( cb2bib: Cb2Bib.extract(in_txt, opts) )
+      end
     end
 
     result
