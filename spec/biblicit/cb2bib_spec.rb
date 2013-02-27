@@ -1,7 +1,5 @@
 # encoding: UTF-8
 
-require 'pry'
-
 describe Cb2Bib do
 
   unless ENV['LOCAL']
