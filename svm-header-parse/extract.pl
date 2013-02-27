@@ -2,11 +2,8 @@
 use strict;
 use FindBin;
 
-use lib "$FindBin::Bin/FileConversionService/lib";
-use lib "$FindBin::Bin/ParsCit/lib";
 use lib "$FindBin::Bin/HeaderParseService/lib";
 
-use ParsCit::Controller;
 use HeaderParse::API::Parser;
 use HeaderParse::Config::API_Config;
 
@@ -42,11 +39,6 @@ sub import {
 sub prep {
     my ($textFile, $id) = @_;
 
-    my ($ecstatus, $msg) = extractCitations($textFile, $id);
-    if ($ecstatus <= 0) {
-	    return ($ecstatus, $msg);
-    }
-    
     my ($ehstatus, $msg) = extractHeader($textFile, $id);
     if ($ehstatus <= 0) {
 	    return ($ehstatus, $msg);
@@ -54,22 +46,6 @@ sub prep {
 
     return (1, "");
 }
-
-
-sub extractCitations {
-    my ($textFile, $id) = @_;
-
-    my $rXML = ParsCit::Controller::extractCitations($textFile);
-
-    unless(open(CITE, ">:utf8", "$outputPath/out.parscit")) {
-	return (0, "Unable to open parscit file: $!");
-    }
-
-    print CITE $$rXML;
-    close CITE;
-    return (1);
-}
-
 
 sub extractHeader {
     my ($textFile, $id) = @_;
