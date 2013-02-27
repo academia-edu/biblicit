@@ -3,6 +3,8 @@ biblicit
 
 Extract citations from PDFs.
 
+Note: The version is 2.x, but really should be 0.2.x.
+
 
 # Usage
 
