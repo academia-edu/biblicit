@@ -5,7 +5,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 Gem::Specification.new do |gem|
   gem.name          = "biblicit"
-  gem.version       = "2.0.0"
+  gem.version       = "2.0.1"
   gem.authors       = ["David Judd"]
   gem.email         = ["david@academia.edu"]
   gem.summary       = %q{Extract citations from PDFs.}
