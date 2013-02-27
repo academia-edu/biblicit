@@ -1,0 +1,3 @@
+[submodule "parscit"]
+	path = parscit
+	url = git@github.com:knmnyn/ParsCit.git
