@@ -4,7 +4,7 @@ require 'tempfile'
 
 module Cb2Bib
 
-  def self.extract(file, opts)
+  def self.extract(file, opts={})
     ParseOperation.new(file, opts).result
   end
 

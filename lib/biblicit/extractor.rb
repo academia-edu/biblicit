@@ -2,6 +2,7 @@
 
 require 'biblicit/cb2bib'
 require 'biblicit/citeseer'
+require 'biblicit/parscit'
 
 require 'tempfile'
 
@@ -31,11 +32,11 @@ private
     result = {}
 
     if !(tools & default_citeseer_algorithms).empty?
-      result.merge! CiteSeer.extract(file, false)
+      result.merge! ParsCit.extract(file, opts)
     end
 
-    if tools.include?(:parshed_token)
-      result.merge!( parshed_token: CiteSeer.extract(file, true)[:parshed] )
+    if tools.include?(:citeseer)
+      result.merge!( citeseer: CiteSeer.extract(file, opts) )
     end
 
     if tools.include?(:cb2bib)
