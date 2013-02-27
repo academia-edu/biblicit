@@ -8,11 +8,12 @@ Gem::Specification.new do |gem|
   gem.version       = "2.0.0"
   gem.authors       = ["David Judd"]
   gem.email         = ["david@academia.edu"]
-  gem.description   = %q{Extract citations from PDFs.}
   gem.summary       = %q{Extract citations from PDFs.}
   gem.homepage      = "http://github.com/academia-edu/biblicit"
 
-  gem.files         = `git ls-files`.split("\n") + `cd parscit && git ls-files`.split("\n").map{ |f| "parscit/#{f}" }
+  gem.files         =
+    `git ls-files`.split("\n") +
+    `cd parscit && git ls-files`.split("\n").map{ |f| "parscit/#{f}" }
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
   gem.test_files    = gem.files.grep(%r{^spec/})
   gem.require_paths = ["lib"]
