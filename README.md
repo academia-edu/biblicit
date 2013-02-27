@@ -7,8 +7,11 @@ Extract citations from PDFs.
 # Usage
 
 ```ruby
+  # Extract metadata from a file using default tools and settings
+  result = Biblicit::Extractor.extract(content: "a string containing the content of a PDF file")
+
   # Extract metadata from a file using all available tools
-  result = Biblicit.extract(file: "myfile.pdf", tools: [:citeseer, :parshed, :sectlabel, :cb2bib])
+  result = Biblicit::Extractor.extract(file: "myfile.pdf", tools: [:citeseer, :parshed, :sectlabel, :cb2bib], remote: true, token: false)
 
   # See reference information for "myfile.pdf"
   result[:citeseer][:title]

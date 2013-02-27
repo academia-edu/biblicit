@@ -43,8 +43,6 @@ module Cb2Bib
           end
         end
       end
-
-      @result[:valid] = !@result[:title].blank?
     end
 
     def cb2bib_config(remote)
