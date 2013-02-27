@@ -26,12 +26,11 @@ private
 
   def self.extract_from_file(file, opts)
     file = File.realpath(file)
-    default_citeseer_algorithms = [:parshed, :sectlabel]
-    tools = opts.delete(:tools) || default_citeseer_algorithms
+    tools = opts.delete(:tools) || [:parshed, :sectlabel]
 
     result = {}
 
-    if !(tools & default_citeseer_algorithms).empty?
+    if !(tools & [:parshed, :sectlabel]).empty?
       result.merge! ParsCit.extract(file, opts)
     end
 

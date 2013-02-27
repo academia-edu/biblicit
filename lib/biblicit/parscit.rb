@@ -10,7 +10,7 @@ module ParsCit
   SH_DIR = "#{File.dirname(__FILE__)}/../../sh"
 
   def self.extract(in_file, opts={})
-    ParseOperation.new(in_file, opts={}).results
+    ParseOperation.new(in_file, opts).results
   end
 
   class ParseOperation

@@ -37,8 +37,8 @@ describe ParsCit do
   end
 
   it "handles ps file" do
-    result = Biblicit.extract(file: "#{FIXTURES_DIR}/KerSch99.ps", tools: [:parshed_token])
-    header = result[:parshed_token]
+    result = Biblicit.extract(file: "#{FIXTURES_DIR}/KerSch99.ps", tools: [:parshed], token: true)
+    header = result[:parshed]
     #header[:title].should == "Pattern Inference Theory: A Probabilistic Approach to Vision"
     header[:title].should =~ /pattern.*inference.*theory.*a.*probabilistic.*approach.*to.*vision/i
   end
