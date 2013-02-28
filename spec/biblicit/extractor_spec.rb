@@ -74,8 +74,16 @@ module Biblicit
     end
 
     it "handles ps file" do
-      pending "Fails because the text extraction isn't good enough"
-      result = Extractor.extract(file: "#{FIXTURES_DIR}/KerSch99.ps")
+      result = Extractor.extract(file: "#{FIXTURES_DIR}/critical-infrastructures.ps")
+
+      citeseer = result[:citeseer]
+      citeseer[:valid].should be_true
+      citeseer[:title].should == "Critical Infrastructures You Can Trust:  Where Telecommunications Fits"
+      citeseer[:authors].should == ["Productname Gpl Ghostscript", "Fred B. Schneider", "Steven M. Bellovin", "Alan S. Inouye"]
+
+      parshed = result[:parshed]
+      parshed[:title].should == "Critical Infrastructures You Can Trust: Where Telecommunications Fits"
+      parshed[:authors].should == ["Fred B Schneider", "Cornell University Steven M Bellovin", "AT&T Labs-Research Alan S Inouye", "Computer Science", "Telecommunications Board"] # not ideal, but ok to match against
     end
 
     it "handles ParsCit sample1" do
