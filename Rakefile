@@ -28,11 +28,3 @@ task :release_internal do |t|
 
   ReleaseInternalGem.new.release_gem
 end
-
-module Bundler
-  class GemHelper
-    def release_gem
-      raise 'STOP. This is an internal gem. Use `rake release_internal` instead'
-    end
-  end
-end
