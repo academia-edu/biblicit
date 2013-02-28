@@ -30,15 +30,15 @@ module Biblicit
 
     def self.extract_from_file(file, opts)
       file = File.realpath(file)
-      tools = opts.delete(:tools) || [:parshed, :sectlabel, :citeseer]
+      tools = opts.delete(:tools) || [:parshed, :citeseer]
 
       result = {}
 
       Tempfile.open(['in','.txt']) do |in_txt|
         `#{SH_DIR}/convert_to_text.sh #{file.shellescape} #{in_txt.path}`
 
-        if !(tools & [:parshed, :sectlabel]).empty?
-          result.merge! ParsCit.extract(in_txt, opts)
+        if tools.include?(:parshed)
+          result.merge!( parshed: ParsCit.extract(in_txt, opts) )
         end
 
         if tools.include?(:citeseer)

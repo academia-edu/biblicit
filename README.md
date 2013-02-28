@@ -13,7 +13,7 @@ Note: The version is 2.x, but really should be 0.2.x.
   result = Biblicit::Extractor.extract(content: "a string containing the content of a PDF file")
 
   # Extract metadata from a file using all available tools
-  result = Biblicit::Extractor.extract(file: "myfile.pdf", tools: [:citeseer, :parshed, :sectlabel, :cb2bib], remote: true, token: false)
+  result = Biblicit::Extractor.extract(file: "myfile.pdf", tools: [:citeseer, :parshed, :cb2bib], remote: true, token: false)
 
   # See reference information for "myfile.pdf"
   result[:citeseer][:title]

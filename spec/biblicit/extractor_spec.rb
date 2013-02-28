@@ -86,9 +86,6 @@ module Biblicit
 
       result[:parshed][:title].should == "A Calculus of Program Transformations and Its Applications"
       result[:parshed][:authors].should == ["Rahma Ben Ayed", "Jules Desharnais", "Marc Frappier", "Ali Mili"]
-
-      result[:sectlabel][:title].should == "A Calculus of Program Transformations and Its Applications"
-      result[:sectlabel][:authors].should == ["Rahma Ben Ayed", "Jules Desharnais", "Marc Frappier", "Ali Mili"]
     end
 
     it "handles ParsCit sample2" do
@@ -109,9 +106,6 @@ module Biblicit
 
       result[:parshed][:title].should == "A Probabilistic Answer Type Model"
       result[:parshed][:authors].should == ["Christopher Pinchak", "Dekang Lin"]
-
-      result[:sectlabel][:title].should == "A Probabilistic Answer Type Model"
-      result[:sectlabel][:authors].should == ["Christopher Pinchak", "Dekang Lin"]
    end
 
   end
