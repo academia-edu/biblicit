@@ -3,9 +3,11 @@
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
+require 'biblicit/version'
+
 Gem::Specification.new do |gem|
   gem.name          = "biblicit"
-  gem.version       = "2.0.4"
+  gem.version       = Biblicit::VERSION
   gem.authors       = ["David Judd"]
   gem.email         = ["david@academia.edu"]
   gem.summary       = %q{Extract citations from PDFs.}
