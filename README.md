@@ -119,8 +119,6 @@ More than these might be required; this is what I had to add to my default insta
 
     sudo cpan install Digest::SHA1
     sudo cpan install String::Approx
-    sudo cpan install XML::Writer::String
-    sudo cpan install XML::Twig
 
 ## Required to use the ParsCit algorithm
 
