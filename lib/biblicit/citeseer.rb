@@ -30,7 +30,8 @@ module CiteSeer
     def parse(xml)
       {
         title: xml.css('title').text,
-        authors: xml.css('author > name').map { |n| n.text },
+        authors: xml.css('author > name').map { |n| n.text.strip }.reject(&:blank?).uniq,
+        author_emails: xml.css('author > email').map { |n| n.text.strip }.reject(&:blank?).uniq,
         abstract: xml.css('abstract').text,
         valid: xml.css('validHeader').first.text == '1',
       }
