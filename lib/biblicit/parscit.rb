@@ -17,20 +17,32 @@ module ParsCit
     attr_reader :result
 
     def initialize(in_txt, opts={})
+      mode = (opts.fetch :include_citations, false) ? 'extract_all' : 'extract_header'
       ENV['CRFPP_HOME'] ||= "#{File.dirname(`which crf_test`)}/../"
-      output = `#{PERL_DIR}/bin/citeExtract.pl -q -m extract_all #{in_txt.path}`
+      output = `#{PERL_DIR}/bin/citeExtract.pl -q -m #{mode} #{in_txt.path}`
       @result = parse(Nokogiri::XML output)
     end
 
   private
 
     def parse(xml)
-      parsed = xml.css("algorithm[name=ParsHed]")
+      result = {}
 
-      result = {
-        title: parsed.css('title').text.gsub(/\s+/,' ').strip,
-        authors: parsed.css('author').map { |a| a.text.gsub(/\s+/,' ').strip },
-        abstract: parsed.css('abstract').text
+      parshed = xml.css("algorithm[name=ParsHed]")
+      result[:parshed] = {
+        title: parshed.css('title').text.gsub(/\s+/,' ').strip,
+        authors: parshed.css('author').map { |a| a.text.gsub(/\s+/,' ').strip },
+        abstract: parshed.css('abstract').text#,
+        #confidence: parshed.css('title').attr('confidence').value.to_f
+      }
+
+      svm = xml.css('algorithm[name="SVM HeaderParse"]')
+      result[:citeseer] = {
+        title: svm.css('title').text,
+        authors: svm.css('author > name').map { |n| n.text.strip }.reject(&:blank?).uniq,
+        author_emails: svm.css('author > email').map { |n| n.text.strip }.reject(&:blank?).uniq,
+        abstract: svm.css('abstract').text,
+        valid: svm.css('validHeader').first.try(:text) == '1'
       }
 
       citations = xml.css('algorithm[name=ParsCit] > citationList > citation').map do |node|

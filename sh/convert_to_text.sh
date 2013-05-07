@@ -9,7 +9,8 @@ INPUT=$1
 OUTPUT=$2
 TYPE=`file -b --mime-type "$INPUT"`
 
-if [[ "$TYPE" == "text/plain" ]]; then
+# file occasionally misidentifies plain text as pascal given the presence of certain keywords :(
+if [[ "$TYPE" == "text/plain" || "$TYPE" == "text/x-pascal" ]]; then
   cp "$INPUT" "$OUTPUT";
 elif [[ "$TYPE" == "application/pdf" && -n `which pdftotext` ]]; then
   pdftotext -raw -enc UTF-8 "$INPUT" "$OUTPUT";

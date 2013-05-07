@@ -1,7 +1,6 @@
 # encoding: UTF-8
 
 require 'biblicit/cb2bib'
-require 'biblicit/citeseer'
 require 'biblicit/parscit'
 
 require 'tempfile'
@@ -30,7 +29,7 @@ module Biblicit
 
     def self.extract_from_file(file, opts)
       file = File.realpath(file)
-      tools = opts.delete(:tools) || [:parshed, :citeseer]
+      tools = opts.delete(:tools) || [:parshed]
 
       result = {}
 
@@ -38,11 +37,7 @@ module Biblicit
         `#{SH_DIR}/convert_to_text.sh #{file.shellescape} #{in_txt.path}`
 
         if tools.include?(:parshed)
-          result.merge!( parshed: ParsCit.extract(in_txt, opts) )
-        end
-
-        if tools.include?(:citeseer)
-          result.merge!( citeseer: CiteSeer.extract(in_txt, opts) )
+          result.merge!( ParsCit.extract(in_txt, opts) )
         end
 
         if tools.include?(:cb2bib)

@@ -26,7 +26,6 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency 'rake'
   gem.add_development_dependency 'rspec'
   gem.add_development_dependency 'pry'
-  gem.add_development_dependency 'pry-debugger'
 
   gem.requirements << 'For PDFs, Poppler or XPDF (try "which pdftotext")'
   gem.requirements << 'For Postscript files, Ghostscript (try "which ps2ascii")'
