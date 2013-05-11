@@ -13,7 +13,7 @@ Note: The version is 2.x, but really should be 0.2.x.
   result = Biblicit::Extractor.extract(content: "a string containing the content of a PDF file")
 
   # Extract metadata from a file using all available tools
-  result = Biblicit::Extractor.extract(file: "myfile.pdf", tools: [:citeseer, :parshed, :cb2bib], remote: true, token: false)
+  result = Biblicit::Extractor.extract(file: "myfile.pdf", tools: [:parshed, :cb2bib], remote: true, token: false)
 
   # See reference information for "myfile.pdf"
   result[:citeseer][:title]
@@ -139,7 +139,7 @@ You can specify where you have installed CRF++ by setting the CRFPP_HOME environ
 
     sudo apt-add-repository 'deb http://cl.naist.jp/~eric-n/ubuntu-nlp oneiric all'
     sudo apt-get update
-    sudo apt-get install libcrf++ crf++
+    sudo apt-get install libcrf++-dev crf++
 
 ##### On OS X with Homebrew
 
