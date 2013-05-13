@@ -18,8 +18,12 @@ module ParsCit
 
     def initialize(in_txt, opts={})
       mode = (opts.fetch :include_citations, false) ? 'extract_all' : 'extract_header'
+
       ENV['CRFPP_HOME'] ||= "#{File.dirname(`which crf_test`)}/../"
+      ENV['PARSCIT_TMPDIR'] ||= "/tmp/"
+
       output = `#{PERL_DIR}/bin/citeExtract.pl -q -m #{mode} #{in_txt.path}`
+
       @result = parse(Nokogiri::XML output)
     end
 
