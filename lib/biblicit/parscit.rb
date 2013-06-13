@@ -17,15 +17,31 @@ module ParsCit
     attr_reader :result
 
     def initialize(in_txt, opts={})
-      mode = (opts.fetch :include_citations, false) ? 'extract_all' : 'extract_header'
+      parse_modes = if (opts.fetch :include_citations, false)
+                      { extract_all: [:citeseer, :parshed, :citations] }
+                    else
+                      {
+                        extract_header_svm_only: [:citeseer],
+                        extract_header_crf_only: [:parshed]
+                      }
+                    end
 
       ENV['SVM_LIGHT_HOME'] ||= "#{File.dirname(`which svm_classify`)}"
       ENV['CRFPP_HOME'] ||= "#{File.dirname(`which crf_test`)}/../"
       ENV['PARSCIT_TMPDIR'] ||= "/tmp/"
 
-      output = `#{PERL_DIR}/bin/citeExtract.pl -q -m #{mode} #{in_txt.path}`
+      @result = {}
 
-      @result = parse(Nokogiri::XML output)
+      parse_modes.map do |mode, keys|
+        outf = Tempfile.new mode.to_s
+        pid = spawn("#{PERL_DIR}/bin/citeExtract.pl -q -m #{mode} #{in_txt.path}", out: outf.path)
+        [pid, outf, keys]
+      end.each do |pid, outf, keys|
+        Process.wait pid
+        output = File.read outf
+        outf.unlink
+        @result.merge! parse(Nokogiri::XML output).slice(*keys)
+      end
     end
 
   private
