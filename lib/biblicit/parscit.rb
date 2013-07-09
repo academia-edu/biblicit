@@ -28,7 +28,7 @@ module ParsCit
 
       ENV['SVM_LIGHT_HOME'] ||= "#{File.dirname(`which svm_classify`)}"
       ENV['CRFPP_HOME'] ||= "#{File.dirname(`which crf_test`)}/../"
-      ENV['PARSCIT_TMPDIR'] ||= "/tmp/"
+      ENV['PARSCIT_TMPDIR'] ||= Dir.tmpdir
 
       @result = {}
 
