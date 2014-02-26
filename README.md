@@ -5,6 +5,8 @@ Extract citations from PDFs.
 
 Note: The version is 2.x, but really should be 0.2.x.
 
+You might also want to try [Grobid](https://github.com/kermitt2/grobid), which I have found to perform better than the version of Parscit used here, which throws away non-textual information (font, formatting, etc).
+
 
 # Usage
 
@@ -37,7 +39,7 @@ Wrapper around Perl & Ruby code from [ParsCit](http://aye.comp.nus.edu.sg/parsCi
 
 Uses a model trained with the [CRF++](http://code.google.com/p/crfpp/) Conditional Random Fields library.
 
-### cb2Bib
+### cb2Bib (not recommended)
 
 Wrapper around [cb2Bib](http://www.molspaces.com/cb2bib/) in command-line mode.
 
